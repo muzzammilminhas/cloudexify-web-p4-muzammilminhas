@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create an Aatish & Aangan customer account.">
+  <meta name="theme-color" content="#100e0c">
+  <title>Create account | Aatish &amp; Aangan</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+  <a class="skip-link" href="#authMain">Skip to registration</a>
+  <main class="auth-shell" id="authMain">
+    <section class="auth-visual" aria-label="Aatish and Aangan">
+      <img src="assets/hero-mobile.webp" alt="A copper handi and Pakistani dishes beside a glowing live-fire grill" width="900" height="600">
+      <div class="auth-visual-overlay"></div>
+      <a class="brand-lockup auth-brand" href="login.html">
+        <img src="assets/favicon.svg" alt="" width="42" height="42">
+        <span><strong>Aatish</strong><small>&amp; Aangan</small></span>
+      </a>
+      <div class="auth-quote"><p>“Come as a guest.<br>Return as part of the aangan.”</p><small>Fictional fine dining · Wah Cantt</small></div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div id="registerFormView">
+          <p class="eyebrow text-ember">Your place at the table</p>
+          <h1>Create an account.</h1>
+          <p class="auth-intro">Save a dastarkhwan, place secure orders and receive live kitchen updates.</p>
+          <div class="alert alert-danger" id="formAlert" role="alert" hidden></div>
+          <form id="registerForm" novalidate>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Full name" minlength="2" maxlength="80" required>
+              <label for="fullName">Full name</label>
+              <div class="invalid-feedback">Enter your full name.</div>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+              <label for="registerEmail">Email address</label>
+              <div class="invalid-feedback">Enter a valid email address.</div>
+            </div>
+            <div class="form-floating mb-2 password-field">
+              <input class="form-control" id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="Password" minlength="8" required>
+              <label for="registerPassword">Password</label>
+              <button class="password-toggle" type="button" data-toggle-password="registerPassword" aria-label="Show password">Show</button>
+              <div class="invalid-feedback">Use at least 8 characters.</div>
+            </div>
+            <div class="password-meter" aria-hidden="true"><span id="passwordMeter"></span></div>
+            <p class="field-hint" id="passwordHint">Use 8+ characters with a letter and a number.</p>
+            <button class="btn btn-ember btn-lg w-100 rounded-pill mt-3" id="registerSubmit" type="submit">Create customer account</button>
+          </form>
+          <p class="auth-switch">Already have a place? <a href="login.html">Sign in</a></p>
+        </div>
+        <div class="confirmation-view" id="confirmationView" hidden>
+          <div class="confirmation-mark">✓</div>
+          <p class="eyebrow text-ember">One final step</p>
+          <h1>Check your inbox.</h1>
+          <p>We sent a secure confirmation link to <strong id="confirmationEmail"></strong>. Open it to activate your account, then return to sign in.</p>
+          <a class="btn btn-ember btn-lg rounded-pill w-100" href="login.html">Return to sign in</a>
+        </div>
+        <p class="auth-note">Your profile is created automatically with the customer role. Admin access cannot be requested here.</p>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.min.js"></script>
+  <script type="module" src="js/register.js"></script>
+</body>
+</html>
+

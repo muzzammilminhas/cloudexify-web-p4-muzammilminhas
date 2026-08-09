@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Protected Aatish & Aangan kitchen and menu dashboard.">
+  <meta name="theme-color" content="#100e0c">
+  <title>Kitchen Pass | Aatish &amp; Aangan</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+  <a class="skip-link" href="#adminMain">Skip to dashboard</a>
+  <div id="offlineBanner" class="offline-banner" role="status" hidden>You are offline. Live kitchen actions are paused.</div>
+  <aside class="admin-sidebar" id="adminSidebar">
+    <a class="brand-lockup" href="admin.html">
+      <img src="assets/favicon.svg" alt="" width="38" height="38">
+      <span><strong>Aatish</strong><small>&amp; Aangan</small></span>
+    </a>
+    <p class="sidebar-label">Kitchen pass</p>
+    <nav aria-label="Admin sections">
+      <a class="active" href="#overview">Overview</a>
+      <a href="#orderQueue">Order queue <span id="pendingNavCount">0</span></a>
+      <a href="#menuManagement">Menu</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="index.html">View customer panel</a>
+      <button type="button" id="adminLogoutButton">Log out</button>
+      <small id="adminUserEmail">Admin</small>
+    </div>
+  </aside>
+
+  <header class="admin-mobile-header">
+    <button type="button" id="adminMenuToggle" aria-controls="adminSidebar" aria-expanded="false">Menu</button>
+    <strong>Kitchen pass</strong>
+    <span class="live-pill"><i></i> Live</span>
+  </header>
+  <div class="admin-sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
+  <main class="admin-main" id="adminMain">
+    <section id="overview" class="admin-section">
+      <div class="admin-heading">
+        <div><p class="eyebrow text-ember">Service overview</p><h1>Good evening, kitchen.</h1><p id="dashboardDate"></p></div>
+        <div class="dashboard-actions"><span class="live-pill"><i></i> Realtime on</span><button class="btn btn-outline-dark rounded-pill" type="button" id="refreshDashboard">Refresh</button></div>
+      </div>
+      <div class="row g-3 stats-grid" id="statsGrid" aria-live="polite">
+        <div class="col-sm-6 col-xl-3"><article class="stat-card"><small>Orders today</small><strong id="statOrders">—</strong><span>Since midnight PKT</span></article></div>
+        <div class="col-sm-6 col-xl-3"><article class="stat-card"><small>Revenue today</small><strong id="statRevenue">—</strong><span>Server-calculated totals</span></article></div>
+        <div class="col-sm-6 col-xl-3"><article class="stat-card stat-card-ember"><small>Pending</small><strong id="statPending">—</strong><span>Waiting for the kitchen</span></article></div>
+        <div class="col-sm-6 col-xl-3"><article class="stat-card"><small>Menu items</small><strong id="statMenu">—</strong><span id="statUnavailable">— unavailable</span></article></div>
+      </div>
+    </section>
+
+    <section class="admin-section" id="orderQueue" aria-labelledby="ordersAdminHeading">
+      <div class="section-toolbar">
+        <div><p class="eyebrow text-ember">Live service</p><h2 id="ordersAdminHeading">Order queue</h2></div>
+        <div class="toolbar-actions">
+          <label><span class="visually-hidden">Filter orders</span><select id="orderStatusFilter"><option value="active">Active orders</option><option value="all">All orders</option><option value="Pending">Pending</option><option value="Preparing">Preparing</option><option value="Ready">Ready</option></select></label>
+          <button class="btn btn-outline-dark rounded-pill" id="exportCsvButton" type="button">Export CSV</button>
+        </div>
+      </div>
+      <div class="admin-state" id="adminOrdersState" role="status"><div class="spinner-border text-warning" aria-hidden="true"></div><p>Opening the kitchen pass…</p></div>
+      <div class="table-responsive admin-table-wrap" id="ordersTableWrap" hidden>
+        <table class="table align-middle admin-table">
+          <thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Placed</th><th>Status</th></tr></thead>
+          <tbody id="ordersTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-section" id="menuManagement" aria-labelledby="menuAdminHeading">
+      <div class="section-toolbar">
+        <div><p class="eyebrow text-ember">From the pantry</p><h2 id="menuAdminHeading">Menu management</h2></div>
+        <button class="btn btn-ember rounded-pill" type="button" id="addMenuItemButton" data-bs-toggle="modal" data-bs-target="#menuItemModal">Add menu item</button>
+      </div>
+      <div class="admin-state" id="adminMenuState" role="status"><div class="spinner-border text-warning" aria-hidden="true"></div><p>Reading the menu…</p></div>
+      <div class="table-responsive admin-table-wrap" id="menuTableWrap" hidden>
+        <table class="table align-middle admin-table">
+          <thead><tr><th>Dish</th><th>Category</th><th>Price</th><th>Availability</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+          <tbody id="menuTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="menuItemModal" tabindex="-1" aria-labelledby="menuItemModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content admin-modal">
+      <div class="modal-header"><div><p class="eyebrow text-ember mb-1">Menu editor</p><h2 class="modal-title" id="menuItemModalTitle">Add a dish</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <form id="menuItemForm" novalidate>
+        <div class="modal-body">
+          <div class="alert alert-danger" id="menuFormAlert" role="alert" hidden></div>
+          <input type="hidden" id="menuItemId">
+          <div class="row g-3">
+            <div class="col-md-7"><label class="form-label" for="itemName">Dish name</label><input class="form-control" id="itemName" maxlength="80" required></div>
+            <div class="col-md-5"><label class="form-label" for="itemPrice">Price (PKR)</label><input class="form-control" id="itemPrice" type="number" min="50" max="100000" step="10" required></div>
+            <div class="col-12"><label class="form-label" for="itemDescription">Description</label><textarea class="form-control" id="itemDescription" rows="3" maxlength="280" required></textarea></div>
+            <div class="col-md-6"><label class="form-label" for="itemCategory">Category</label><select class="form-select" id="itemCategory" required><option value="">Choose…</option><option>From the Angaar</option><option>Potohar Plates</option><option>Rice &amp; Dum</option><option>Garden &amp; Grain</option><option>Meetha</option><option>House Pour</option></select></div>
+            <div class="col-md-6"><label class="form-label" for="itemBadge">Badge</label><input class="form-control" id="itemBadge" maxlength="30" placeholder="Chef's fire"></div>
+            <div class="col-md-8"><label class="form-label" for="itemImageUrl">Image URL</label><input class="form-control" id="itemImageUrl" type="text" maxlength="500" value="assets/menu-atlas.webp" required></div>
+            <div class="col-md-4"><label class="form-label" for="itemImagePosition">Atlas crop</label><select class="form-select" id="itemImagePosition"><option value="top-left">Top left</option><option value="top-right">Top right</option><option value="bottom-left">Bottom left</option><option value="bottom-right">Bottom right</option><option value="center">Full image</option></select></div>
+            <div class="col-md-6"><label class="form-label" for="itemSpiceLevel">Spice level</label><select class="form-select" id="itemSpiceLevel"><option value="0">None</option><option value="1">Gentle</option><option value="2">Medium</option><option value="3">Bold</option></select></div>
+            <div class="col-md-6"><label class="form-label" for="itemDietary">Dietary note</label><input class="form-control" id="itemDietary" maxlength="40" placeholder="Vegetarian"></div>
+            <div class="col-sm-6"><div class="form-check form-switch pt-2"><input class="form-check-input" id="itemAvailable" type="checkbox" checked><label class="form-check-label" for="itemAvailable">Available now</label></div></div>
+            <div class="col-sm-6"><div class="form-check form-switch pt-2"><input class="form-check-input" id="itemFeatured" type="checkbox"><label class="form-check-label" for="itemFeatured">Chef featured</label></div></div>
+          </div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-link text-dark" data-bs-dismiss="modal">Cancel</button><button class="btn btn-ember rounded-pill px-4" type="submit" id="saveMenuItemButton">Save dish</button></div>
+      </form>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"><div class="modal-content admin-modal">
+      <div class="modal-header"><h2 class="modal-title" id="deleteConfirmTitle">Remove this dish?</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body"><p id="deleteConfirmCopy">The dish will disappear from the live menu. Historical order snapshots stay intact.</p></div>
+      <div class="modal-footer"><button type="button" class="btn btn-link text-dark" data-bs-dismiss="modal">Keep dish</button><button type="button" class="btn btn-danger rounded-pill px-4" id="confirmDeleteButton">Remove dish</button></div>
+    </div></div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.min.js"></script>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
+

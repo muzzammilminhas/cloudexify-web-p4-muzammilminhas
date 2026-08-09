@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sign in to Aatish & Aangan.">
+  <meta name="theme-color" content="#100e0c">
+  <title>Sign in | Aatish &amp; Aangan</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+  <a class="skip-link" href="#authMain">Skip to sign in</a>
+  <main class="auth-shell" id="authMain">
+    <section class="auth-visual" aria-label="Aatish and Aangan">
+      <img src="assets/hero-mobile.webp" alt="A copper handi and Pakistani dishes beside a glowing live-fire grill" width="900" height="600">
+      <div class="auth-visual-overlay"></div>
+      <a class="brand-lockup auth-brand" href="login.html">
+        <img src="assets/favicon.svg" alt="" width="42" height="42">
+        <span><strong>Aatish</strong><small>&amp; Aangan</small></span>
+      </a>
+      <div class="auth-quote"><p>“The warmth of an aangan.<br>The soul of the fire.”</p><small>Fictional fine dining · Wah Cantt</small></div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <p class="eyebrow text-ember" id="loginEyebrow">Welcome to the table</p>
+        <h1 id="loginHeading">Sign in for supper.</h1>
+        <p class="auth-intro" id="loginIntro">Continue to the live menu, your dastarkhwan and kitchen updates.</p>
+
+        <div class="auth-mode" role="group" aria-label="Sign-in destination">
+          <button class="active" type="button" data-login-mode="customer">Customer</button>
+          <button type="button" data-login-mode="admin">Admin portal</button>
+        </div>
+
+        <div class="alert alert-danger" id="formAlert" role="alert" hidden></div>
+        <form id="loginForm" novalidate>
+          <div class="form-floating mb-3">
+            <input class="form-control" id="loginEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+            <label for="loginEmail">Email address</label>
+            <div class="invalid-feedback">Enter a valid email address.</div>
+          </div>
+          <div class="form-floating mb-2 password-field">
+            <input class="form-control" id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Password" minlength="8" required>
+            <label for="loginPassword">Password</label>
+            <button class="password-toggle" type="button" data-toggle-password="loginPassword" aria-label="Show password">Show</button>
+            <div class="invalid-feedback">Enter your password.</div>
+          </div>
+          <button class="btn btn-ember btn-lg w-100 rounded-pill mt-4" id="loginSubmit" type="submit">Sign in</button>
+        </form>
+        <p class="auth-switch" id="registerPrompt">New to the table? <a href="register.html">Create a customer account</a></p>
+        <p class="auth-note">This is a fictional restaurant and educational full-stack project. Do not use a password you reuse elsewhere.</p>
+      </div>
+    </section>
+  </main>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.min.js"></script>
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>
+

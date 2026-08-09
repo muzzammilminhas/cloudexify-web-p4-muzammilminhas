@@ -1,0 +1,13 @@
+{
+  "name": "Aatish & Aangan",
+  "short_name": "Aatish",
+  "description": "A fictional live-fire Pakistani fine-dining ordering experience.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#100e0c",
+  "theme_color": "#100e0c",
+  "icons": [
+    { "src": "/assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
+
